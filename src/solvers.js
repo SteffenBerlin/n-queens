@@ -28,35 +28,19 @@ window.findNRooksSolution = function(n) {
         //toggle current back to 0
   //call recursive function
   //assign one solution to solution
-  if(n === 1){
-    return [[1]];
-  }
-  else if(n===7){
-    return "we are at 7";
-  }
+  
   var solution;
   var resultskeeper = [];
   var board = new Board({n:n});
-  console.log("this is our board", JSON.stringify(board.rows()));
-  // console.log('this is our board',board);
 
   var recurse = function(board, currRow) {
-    console.log("this is our board in recurse", JSON.stringify(board.rows()));
-    console.log("this is our current row", currRow);
     if(currRow === n){
-      // debugger;
-      // var copy = JSON.parse(JSON.stringify(board));
-      // console.log("this is clone", JSON.stringify(copy));
-      // console.log('this is clone',copy);
       resultskeeper.push(JSON.parse(JSON.stringify(board.rows())));
     }
     else {
-      console.log("this is the length", board.get(currRow).length);
       for(var i = 0; i < board.get(currRow).length; i++){
         board.togglePiece(currRow, i);
-        console.log("this is our board in after toggle1", JSON.stringify(board.rows()));
         if(board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false){
-          console.log("this is our board before recursion", JSON.stringify(board.rows()));
           recurse(board, currRow+1);
         }
         board.togglePiece(currRow, i);
@@ -64,17 +48,33 @@ window.findNRooksSolution = function(n) {
     }
   };
   recurse(board, 0);
-  console.log('this is our resultskeeper', resultskeeper);
   solution = resultskeeper[0];
-  console.log("this is our resultskeeper", resultskeeper);
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount;
+  var resultskeeper = [];
+  var board = new Board({n:n});
 
+  var recurse = function(board, currRow) {
+    if(currRow === n){
+      resultskeeper.push(JSON.parse(JSON.stringify(board.rows())));
+    }
+    else {
+      for(var i = 0; i < board.get(currRow).length; i++){
+        board.togglePiece(currRow, i);
+        if(board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false){
+          recurse(board, currRow+1);
+        }
+        board.togglePiece(currRow, i);
+      }
+    }
+  };
+  recurse(board, 0);
+  solutionCount = resultskeeper.length;
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
