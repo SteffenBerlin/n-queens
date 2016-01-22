@@ -40,7 +40,7 @@ window.findNRooksSolution = function(n) {
     else {
       for(var i = 0; i < board.get(currRow).length; i++){
         board.togglePiece(currRow, i);
-        if(board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false){
+        if(board.hasColConflictAt(i) === false){
           recurse(board, currRow+1);
         }
         board.togglePiece(currRow, i);
@@ -66,7 +66,7 @@ window.countNRooksSolutions = function(n) {
     else {
       for(var i = 0; i < board.get(currRow).length; i++){
         board.togglePiece(currRow, i);
-        if(board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false){
+        if(board.hasColConflictAt(i) === false ){
           recurse(board, currRow+1);
         }
         board.togglePiece(currRow, i);
@@ -91,7 +91,7 @@ window.findNQueensSolution = function(n) {
     else {
       for(var i = 0; i < board.get(currRow).length; i++){
         board.togglePiece(currRow, i);
-        if(board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false && board.hasAnyMajorDiagonalConflicts() === false && board.hasAnyMinorDiagonalConflicts() === false){
+        if(board.hasColConflictAt(i) === false && board.hasAnyRowConflicts() === false && board.hasAnyMajorDiagonalConflicts() === false && board.hasAnyMinorDiagonalConflicts() === false){
           recurse(board, currRow+1);
         }
         board.togglePiece(currRow, i);
@@ -121,7 +121,7 @@ window.countNQueensSolutions = function(n) {
     else {
       for(var i = 0; i < board.get(currRow).length; i++){
         board.togglePiece(currRow, i);
-        if(board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false && board.hasAnyMajorDiagonalConflicts() === false && board.hasAnyMinorDiagonalConflicts() === false){
+        if(board.hasColConflictAt(i) === false && board.hasAnyRowConflicts() === false && board.hasAnyMajorDiagonalConflicts() === false && board.hasAnyMinorDiagonalConflicts() === false){
           recurse(board, currRow+1);
         }
         board.togglePiece(currRow, i);
